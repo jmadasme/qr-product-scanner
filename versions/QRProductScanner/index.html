@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Product Scanner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@latest/dist/jsQR.js">
+  </script>
+
+  <style>
+    /* ================================================================
+       CSS Variables — Tema claro minimalista
+       ================================================================ */
+    :root {
+      --white: #FFFFFF;
+      --light-gray: #F5F5F7;
+      --mid-gray: #E8E8ED;
+      --border: #D2D2D7;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --accent: #0071E3;
+      --accent-hover: #0077ED;
+      --accent-light: rgba(0, 113, 227, 0.08);
+      --success: #30D158;
+      --success-alpha: rgba(48, 209, 88, 0.25);
+      --error: #FF453A;
+      --error-alpha: rgba(255, 69, 58, 0.12);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --header-size: 26px;
+      --title-size: 20px;
+      --body-size: 15px;
+      --small-size: 13px;
+    }
+
+    /* ================================================================
+       Reset y base
+       ================================================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font);
+      font-size: var(--body-size);
+      color: var(--text-primary);
+      background: var(--light-gray);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+    }
+
+    /* ================================================================
+       Contenedor principal
+       ================================================================ */
+    .app {
+      width: 100%;
+      max-width: 720px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    /* ================================================================
+       Header
+       ================================================================ */
+    header {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    header h1 {
+      font-size: var(--header-size);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    header p {
+      font-size: var(--body-size);
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* ================================================================
+       Área de escaneo
+       ================================================================ */
+    #scanner-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--light-gray);
+      margin: 20px 20px 0;
+      border-radius: var(--radius-lg);
+      min-height: 400px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* --- Placeholder --- */
+    #placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    #placeholder.hidden,
+    #camera-view.hidden {
+      display: none;
+    }
+
+    .camera-icon {
+      font-size: 80px;
+      line-height: 1;
+      opacity: 0.3;
+      user-select: none;
+    }
+
+    #placeholder p {
+      color: var(--text-secondary);
+      font-size: var(--body-size);
+      text-align: center;
+      max-width: 280px;
+    }
+
+    /* --- Botón principal --- */
+    #scan-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      font-family: var(--font);
+      font-size: var(--body-size);
+      font-weight: 600;
+      color: var(--white);
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+    }
+
+    #scan-btn:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 16px rgba(0, 113, 227, 0.4);
+    }
+
+    #scan-btn:active {
+      transform: scale(0.97);
+    }
+
+    #scan-btn.stop {
+      background: var(--error);
+      box-shadow: 0 2px 8px rgba(255, 69, 58, 0.3);
+    }
+
+    #scan-btn.stop:hover {
+      background: #FF6B5E;
+      box-shadow: 0 4px 16px rgba(255, 69, 58, 0.4);
+    }
+
+    /* --- Camera View --- */
+    #camera-view {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    #video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+    #canvas {
+      display: none;
+    }
+
+    /* ================================================================
+       Viewfinder — Cuadrante con esquinas animadas
+       ================================================================ */
+    #viewfinder {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(65%, 320px);
+      aspect-ratio: 1 / 1;
+      pointer-events: none;
+    }
+
+    #viewfinder.flash {
+      animation: flash-green 0.4s ease-out;
+    }
+
+    @keyframes flash-green {
+      0%   { box-shadow: inset 0 0 0 0 rgba(48, 209, 88, 0); }
+      30%  { box-shadow: inset 0 0 120px 40px rgba(48, 209, 88, 0.35); }
+      100% { box-shadow: inset 0 0 0 0 rgba(48, 209, 88, 0); }
+    }
+
+    /* Esquinas tipo L */
+    .corner {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-color: rgba(255, 255, 255, 0.85);
+      border-style: solid;
+    }
+
+    .corner.tl {
+      top: 0; left: 0;
+      border-width: 3px 0 0 3px;
+      border-radius: 4px 0 0 0;
+      animation: breathe-tl 2.4s ease-in-out infinite;
+    }
+    .corner.tr {
+      top: 0; right: 0;
+      border-width: 3px 3px 0 0;
+      border-radius: 0 4px 0 0;
+      animation: breathe-tr 2.4s ease-in-out infinite;
+    }
+    .corner.bl {
+      bottom: 0; left: 0;
+      border-width: 0 0 3px 3px;
+      border-radius: 0 0 0 4px;
+      animation: breathe-bl 2.4s ease-in-out infinite;
+    }
+    .corner.br {
+      bottom: 0; right: 0;
+      border-width: 0 3px 3px 0;
+      border-radius: 0 0 4px 0;
+      animation: breathe-br 2.4s ease-in-out infinite;
+    }
+
+    /* Breathing animation — cada esquina se mueve ligeramente */
+    @keyframes breathe-tl {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(3px, 3px); }
+    }
+    @keyframes breathe-tr {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(-3px, 3px); }
+    }
+    @keyframes breathe-bl {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(3px, -3px); }
+    }
+    @keyframes breathe-br {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(-3px, -3px); }
+    }
+
+    /* Línea de barrido horizontal */
+    #viewfinder::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 8%;
+      width: 84%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+      animation: sweep 2.4s ease-in-out infinite;
+      border-radius: 1px;
+    }
+
+    @keyframes sweep {
+      0%, 100% { top: 8%; }
+      50%      { top: 92%; }
+    }
+
+    /* Texto indicativo debajo del viewfinder */
+    .hint-text {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: var(--small-size);
+      font-weight: 400;
+      pointer-events: none;
+      letter-spacing: 0.3px;
+    }
+
+    /* ================================================================
+       Panel de resultado
+       ================================================================ */
+    #result-panel {
+      margin: 16px 20px 0;
+      padding: 20px 24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      animation: slideUp 0.35s ease-out;
+    }
+
+    #result-panel.hidden {
+      display: none;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header h3 {
+      font-size: var(--title-size);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    /* Loading state */
+    #loading-state {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+    }
+    #loading-state.hidden { display: none; }
+
+    .spinner {
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid var(--mid-gray);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #loading-state p {
+      color: var(--text-secondary);
+      font-size: var(--body-size);
+    }
+
+    /* Result state */
+    #result-state.hidden { display: none; }
+
+    #product-code {
+      font-size: var(--small-size);
+      color: var(--text-secondary);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    #product-desc {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .value-label {
+      font-size: var(--small-size);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    #product-value {
+      font-size: var(--header-size);
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Error state */
+    #error-state.hidden { display: none; }
+
+    #error-state {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+    }
+
+    #error-message {
+      color: var(--error);
+      font-size: var(--body-size);
+      font-weight: 500;
+    }
+
+    /* ================================================================
+       Barra de estado
+       ================================================================ */
+    #status-bar {
+      display: flex;
+      align-items: center;
+      padding: 14px 28px;
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      font-size: var(--small-size);
+      color: var(--text-secondary);
+      gap: 8px;
+    }
+
+    #status-text {
+      transition: color 0.3s ease;
+    }
+
+    #status-text.success { color: var(--success); font-weight: 600; }
+    #status-text.error   { color: var(--error);   font-weight: 600; }
+    #status-text.info    { color: var(--accent);   font-weight: 500; }
+
+    /* ================================================================
+       Responsive
+       ================================================================ */
+    @media (max-width: 600px) {
+      .app {
+        max-width: 100%;
+        box-shadow: none;
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 20px 20px 16px;
+      }
+      header h1 { font-size: 22px; }
+
+      #scanner-container {
+        margin: 12px 12px 0;
+        min-height: 300px;
+        border-radius: var(--radius-md);
+      }
+
+      #camera-view { min-height: 300px; }
+
+      #viewfinder {
+        width: min(72%, 260px);
+      }
+
+      .corner { width: 24px; height: 24px; }
+
+      #result-panel {
+        margin: 12px 12px 0;
+        padding: 16px 18px;
+      }
+
+      #status-bar {
+        padding: 12px 20px;
+        margin-top: 12px;
+      }
+
+      #scan-btn {
+        padding: 14px 24px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+    <header>
+      <h1>QR Product Scanner</h1>
+      <p>Escanea códigos QR de productos</p>
+    </header>
+
+    <!-- ============================================================
+         SCANNER AREA
+         ============================================================ -->
+    <div id="scanner-container">
+      <!-- Placeholder (cámara apagada) -->
+      <div id="placeholder">
+        <div class="camera-icon">📷</div>
+        <p>Presiona el botón para activar la cámara</p>
+        <button id="scan-btn">📷  Escanear QR</button>
+      </div>
+
+      <!-- Camera View (cámara encendida) -->
+      <div id="camera-view" class="hidden">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+        <div id="viewfinder">
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+        </div>
+        <div class="hint-text">Coloca el código QR dentro del recuadro</div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         RESULT PANEL
+         ============================================================ -->
+    <div id="result-panel" class="hidden">
+      <div class="result-header">
+        <h3>Producto Detectado</h3>
+      </div>
+
+      <!-- Loading -->
+      <div id="loading-state" class="hidden">
+        <div class="spinner"></div>
+        <p>Consultando producto…</p>
+      </div>
+
+      <!-- Result -->
+      <div id="result-state" class="hidden">
+        <p id="product-code"></p>
+        <h2 id="product-desc"></h2>
+        <div class="value-row">
+          <span class="value-label">Valor:</span>
+          <span id="product-value"></span>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div id="error-state" class="hidden">
+        <p id="error-message"></p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         STATUS BAR
+         ============================================================ -->
+    <footer id="status-bar">
+      <span id="status-icon">💡</span>
+      <span id="status-text">Esperando — presiona «Escanear QR»</span>
+    </footer>
+  </div>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ==============================================================
+      //  Mock API — Productos de ejemplo
+      // ==============================================================
+      const PRODUCTS = {
+        'PROD-00123-A7B': {
+          code: 'PROD-00123-A7B',
+          description: 'Auriculares Bluetooth Pro',
+          value: 59.99,
+          currency: '$',
+        },
+        'PROD-00456-C9D': {
+          code: 'PROD-00456-C9D',
+          description: 'Teclado Mecánico RGB',
+          value: 89.99,
+          currency: '$',
+        },
+        'PROD-00789-E1F': {
+          code: 'PROD-00789-E1F',
+          description: 'Monitor 27" 4K',
+          value: 349.99,
+          currency: '$',
+        },
+        'PROD-00999-G3H': {
+          code: 'PROD-00999-G3H',
+          description: 'Webcam HD 1080p',
+          value: 45.50,
+          currency: '$',
+        },
+      };
+
+      /**
+       * Simula una consulta a la API con latencia de red.
+       * @param {string} code - Código de producto (PROD-XXXXX-YYY).
+       * @param {function} onResult - Callback con datos del producto o null.
+       */
+      function getProduct(code, onResult) {
+        const delay = 300 + Math.random() * 500; // 300–800ms
+        setTimeout(() => {
+          const product = PRODUCTS[code] || null;
+          onResult(product);
+        }, delay);
+      }
+
+      // ==============================================================
+      //  Elementos DOM
+      // ==============================================================
+      const $ = (sel) => document.querySelector(sel);
+
+      const placeholder    = $('#placeholder');
+      const cameraView     = $('#camera-view');
+      const video          = $('#video');
+      const canvas         = $('#canvas');
+      const viewfinder     = $('#viewfinder');
+      const scanBtn        = $('#scan-btn');
+      const resultPanel    = $('#result-panel');
+      const loadingState   = $('#loading-state');
+      const resultState    = $('#result-state');
+      const errorState     = $('#error-state');
+      const productCode    = $('#product-code');
+      const productDesc    = $('#product-desc');
+      const productValue   = $('#product-value');
+      const statusText     = $('#status-text');
+      const statusIcon     = $('#status-icon');
+
+      // ==============================================================
+      //  Estado
+      // ==============================================================
+      const State = Object.freeze({
+        IDLE:       'idle',
+        SCANNING:   'scanning',
+        PROCESSING: 'processing',
+        RESULT:     'result',
+        ERROR:      'error',
+      });
+
+      let currentState = State.IDLE;
+      let stream = null;
+      let scanTimer = null;
+      let lastCode = '';
+      let isProcessing = false;
+
+      // ==============================================================
+      //  Funciones de UI
+      // ==============================================================
+      function setStatus(text, cssClass) {
+        statusText.textContent = text;
+        statusText.className = cssClass || '';
+      }
+
+      function setIcon(icon) {
+        statusIcon.textContent = icon;
+      }
+
+      function showPlaceholder() {
+        placeholder.classList.remove('hidden');
+        cameraView.classList.add('hidden');
+        scanBtn.textContent = '📷  Escanear QR';
+        scanBtn.className = '';
+        resultPanel.classList.add('hidden');
+      }
+
+      function showCameraView() {
+        placeholder.classList.add('hidden');
+        cameraView.classList.remove('hidden');
+        scanBtn.textContent = '⏹  Detener';
+        scanBtn.className = 'stop';
+      }
+
+      function showLoading() {
+        loadingState.classList.remove('hidden');
+        resultState.classList.add('hidden');
+        errorState.classList.add('hidden');
+        resultPanel.classList.remove('hidden');
+        setStatus('Consultando producto…', 'info');
+        setIcon('⏳');
+      }
+
+      function showResult(data) {
+        loadingState.classList.add('hidden');
+        resultState.classList.remove('hidden');
+        errorState.classList.add('hidden');
+        resultPanel.classList.remove('hidden');
+
+        productCode.textContent = `Código: ${data.code}`;
+        productDesc.textContent = data.description;
+        productValue.textContent = `${data.currency}${data.value.toFixed(2)}`;
+
+        setStatus(`Producto encontrado: ${data.description}`, 'success');
+        setIcon('✅');
+      }
+
+      function showError(msg) {
+        loadingState.classList.add('hidden');
+        resultState.classList.add('hidden');
+        errorState.classList.remove('hidden');
+        resultPanel.classList.remove('hidden');
+
+        const errorMsg = document.getElementById('error-message');
+        errorMsg.textContent = msg;
+
+        setStatus(msg, 'error');
+        setIcon('❌');
+      }
+
+      function flashViewfinder() {
+        viewfinder.classList.remove('flash');
+        // Forzar reflow para reiniciar la animación
+        void viewfinder.offsetWidth;
+        viewfinder.classList.add('flash');
+      }
+
+      function resetScanner() {
+        isProcessing = false;
+        // Mantenemos lastCode para evitar re-detección del mismo QR
+      }
+
+      // ==============================================================
+      //  Cámara
+      // ==============================================================
+      async function startCamera() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment', width: { ideal: 640 }, height: { ideal: 480 } },
+            audio: false,
+          });
+          video.srcObject = stream;
+          await video.play();
+
+          showCameraView();
+          currentState = State.SCANNING;
+          lastCode = '';
+          isProcessing = false;
+          setStatus('Escaneando — enfoca un código QR', 'info');
+          setIcon('📷');
+          startScanLoop();
+        } catch (err) {
+          let msg = 'Error al abrir la cámara';
+          if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+            msg = 'Permiso de cámara denegado';
+          } else if (err.name === 'NotFoundError') {
+            msg = 'No se detectó cámara';
+          }
+          setStatus(msg, 'error');
+          setIcon('❌');
+          currentState = State.ERROR;
+        }
+      }
+
+      function stopCamera() {
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+          stream = null;
+        }
+        video.srcObject = null;
+        stopScanLoop();
+        showPlaceholder();
+        currentState = State.IDLE;
+        lastCode = '';
+        isProcessing = false;
+        setStatus('Cámara detenida', '');
+        setIcon('💡');
+        // Resetear estado tras 1.5s
+        setTimeout(() => {
+          if (currentState === State.IDLE) {
+            setStatus('Esperando — presiona «Escanear QR»', '');
+            setIcon('💡');
+          }
+        }, 1500);
+      }
+
+      // ==============================================================
+      //  Bucle de escaneo QR
+      // ==============================================================
+      function startScanLoop() {
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const scanInterval = 250; // ms entre capturas
+
+        scanTimer = setInterval(() => {
+          if (isProcessing || !video.videoWidth) return;
+
+          const w = video.videoWidth;
+          const h = video.videoHeight;
+          if (w === 0 || h === 0) return;
+
+          canvas.width = w;
+          canvas.height = h;
+          ctx.drawImage(video, 0, 0, w, h);
+
+          const imageData = ctx.getImageData(0, 0, w, h);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+          if (code && code.data) {
+            const raw = code.data.trim();
+
+            // Validar formato: PROD-XXXXX-YYY
+            const match = raw.match(/^PROD-\d{5}-[A-Z0-9]{3}$/);
+            if (!match) {
+              // QR detectado pero formato inválido — ignorar silenciosamente
+              return;
+            }
+
+            if (raw === lastCode) {
+              return; // mismo código, evitar re-detección
+            }
+
+            // QR válido detectado
+            lastCode = raw;
+            isProcessing = true;
+            currentState = State.PROCESSING;
+            stopScanLoop();
+
+            flashViewfinder();
+            setStatus(`Código detectado: ${raw} — consultando…`, 'info');
+            setIcon('📦');
+
+            showLoading();
+
+            getProduct(raw, (product) => {
+              if (product) {
+                showResult(product);
+                currentState = State.RESULT;
+              } else {
+                showError(`Producto no registrado: "${raw}"`);
+                currentState = State.ERROR;
+              }
+
+              // Reiniciar escáner tras 2.5s
+              setTimeout(() => {
+                if (currentState === State.PROCESSING) return;
+                resetScanner();
+                if (currentState !== State.IDLE) {
+                  startScanLoop();
+                  setStatus('Escaneando — nuevo código disponible', 'info');
+                  setIcon('📷');
+                }
+              }, 2500);
+            });
+          }
+        }, scanInterval);
+      }
+
+      function stopScanLoop() {
+        if (scanTimer) {
+          clearInterval(scanTimer);
+          scanTimer = null;
+        }
+      }
+
+      // ==============================================================
+      //  Eventos
+      // ==============================================================
+      scanBtn.addEventListener('click', () => {
+        if (currentState === State.IDLE || currentState === State.ERROR) {
+          startCamera();
+        } else {
+          stopCamera();
+        }
+      });
+
+      // ==============================================================
+      //  Inicialización
+      // ==============================================================
+      showPlaceholder();
+      setStatus('Esperando — presiona «Escanear QR»', '');
+      setIcon('💡');
+      currentState = State.IDLE;
+
+      console.log('✅ QR Product Scanner ready');
+      console.log('📦 Productos disponibles:');
+      Object.values(PRODUCTS).forEach(p => {
+        console.log(`   ${p.code} → ${p.description} (${p.currency}${p.value})`);
+      });
+
+    })();
+  </script>
+</body>
+</html>
