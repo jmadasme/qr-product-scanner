@@ -134,6 +134,75 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
   .stat{border-right:0;border-bottom:1px solid var(--line)}
   h1{font-size:42px}
 }
+
+/* ── Contenido heredado del proyecto original, en clave sobria ── */
+.rich{max-width:78ch}
+.rich p{margin:0 0 14px;color:#c3d4da}
+.rich h3{margin:26px 0 10px;font-size:19px;letter-spacing:-.02em}
+.rich h4{margin:22px 0 8px;font-size:15px;letter-spacing:-.01em}
+.rich ul,.rich ol{margin:0 0 16px;padding-left:22px;color:#c3d4da}
+.rich li{margin:0 0 6px}
+.rich figure{margin:22px 0;border:1px solid var(--line);border-radius:16px;padding:10px;background:rgba(11,34,43,.5)}
+.rich figure img{width:100%;display:block;border-radius:10px}
+.rich figcaption{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:9px;line-height:1.5}
+.rich .table-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px}
+.rich table{border-collapse:collapse;width:100%;font-size:13.5px}
+.rich th,.rich td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.rich th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:rgba(11,34,43,.6)}
+.rich tr:last-child td{border-bottom:0}
+.rich pre{margin:18px 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#04141a;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.6;color:#cfe3e8}
+.rich code{font-family:var(--mono);font-size:.92em}
+.rich .note{margin:18px 0;padding:13px 16px;border-left:2px solid var(--accent);background:rgba(42,157,143,.07);color:#c3d4da;font-size:14px}
+.rich .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.rich .card-grid .card{margin:0}
+
+
+.rich h3{margin:26px 0 8px}
+.rich p{margin:0 0 14px;color:var(--muted);line-height:1.7}
+.fail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:6px}
+.fail{background:rgba(11,34,43,.55);border:1px solid var(--line);border-radius:14px;padding:18px}
+.fail .v{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--warm,#D6A86A)}
+.fail h3{font-size:16px;margin:8px 0 6px}
+.fail p{font-size:14px;margin:0;color:var(--muted)}
+.rating-head{display:flex;align-items:center;gap:20px;margin:6px 0 18px;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:rgba(11,34,43,.55)}
+.rating-avg{font-family:var(--mono);font-size:40px;line-height:1;color:var(--accent)}
+.rating-avg small{font-size:14px;color:var(--muted)}
+.rating-head p{margin:4px 0 0;font-size:14px;color:var(--muted);max-width:70ch}
+.rating{display:grid;gap:2px}
+.rating-row{display:grid;grid-template-columns:165px minmax(90px,1fr) 48px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.rating-row:last-child{border-bottom:0}
+.rating-name{font-size:13.5px;font-weight:600}
+.rating-bar{height:6px;border-radius:99px;background:rgba(148,190,200,.14);overflow:hidden}
+.rating-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.rating-score{font-family:var(--mono);font-size:12.5px;color:var(--accent);text-align:right}
+.rating-note{grid-column:2/-1;font-size:12.5px;color:var(--muted);margin-top:-4px}
+.faq{display:grid;gap:0;margin-top:4px}
+.faq details{border-bottom:1px solid var(--line);padding:14px 0}
+.faq summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";display:inline-block;width:18px;color:var(--accent);font-family:var(--mono)}
+.faq details[open] summary::before{content:"–"}
+.faq p{margin:10px 0 0 18px;font-size:14px;color:var(--muted)}
+@media(max-width:720px){
+  .fail-grid{grid-template-columns:1fr}
+  .rating-head{flex-direction:column;align-items:flex-start}
+  .rating-row{grid-template-columns:120px 1fr 44px}
+}
+
+
+.detail h2{margin:34px 0 10px;font-size:24px;letter-spacing:-.02em}
+.detail h3{margin:24px 0 8px;font-size:17px}
+.detail p{margin:0 0 14px;color:var(--muted);line-height:1.75}
+.detail ul,.detail ol{margin:0 0 16px 20px;color:var(--muted)}
+.detail li{margin:6px 0}
+.detail table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+.detail th,.detail td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+.detail th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.detail pre{background:rgba(6,20,27,.75);border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font-size:13px}
+.detail code{font-family:var(--mono);font-size:.92em}
+.detail img{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+.detail blockquote{border-left:2px solid var(--accent);margin:14px 0;padding:2px 0 2px 16px;color:var(--muted)}
+
 </style>
 <link rel="stylesheet" href="assets/community.css?v=1">
 </head>
@@ -182,35 +251,176 @@ h2{font-size:clamp(30px,4vw,46px);line-height:1.05;letter-spacing:-.04em;margin:
   <a href="https://github.com/jmadasme/qr-product-scanner/tree/main/versions/QRProductScanner" target="_blank" rel="noopener">Ver carpeta <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </article></div>
 </div></section>
-
-<section class="section tight"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">03 — Cómo se usa</div><h2>De la carpeta a la práctica.</h2></div>
-  <div class="timeline"><div class="step reveal"><div class="step-n">01</div><h4>Abrí la página</h4><p>No requiere build ni servidor.</p></div><div class="step reveal"><div class="step-n">02</div><h4>Permití la cámara</h4><p>El navegador pide acceso explícito.</p></div><div class="step reveal"><div class="step-n">03</div><h4>Apuntá al QR</h4><p>Con luz suficiente y el código completo.</p></div><div class="step reveal"><div class="step-n">04</div><h4>Leé el resultado</h4><p>El contenido queda en pantalla.</p></div></div>
-</div></section>
-
-<section class="section tight"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">04 — Decisiones</div><h2>Lo que lo hace distinto</h2></div>
-  <div class="features"><div class="feature reveal"><h4>Sin backend</h4><p>Todo ocurre en el cliente.</p></div><div class="feature reveal"><h4>Sin instalación</h4><p>Un navegador alcanza.</p></div><div class="feature reveal"><h4>Cámara del teléfono</h4><p>Funciona en móvil.</p></div><div class="feature reveal"><h4>Autocontenido</h4><p>HTML, CSS y JS en el proyecto.</p></div><div class="feature reveal"><h4>Antecedente desktop</h4><p>La versión PyQt6 se documenta, no se oculta.</p></div><div class="feature reveal"><h4>Uso directo</h4><p>No hay registro ni cuenta.</p></div></div>
-</div></section>
-
-<section class="section tight" id="stack"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">05 — Stack y arranque</div><h2>Con qué está construido</h2></div>
-  <div class="stack-grid">
-    <div class="reveal"><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Cámara</span><span class="chip">QR</span></div><div class="note"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>La cámara solo funciona en localhost o HTTPS. Abrir el HTML con file:// puede bloquear el permiso.</span></div></div>
-    <div class="terminal reveal"><div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><pre>git clone https://github.com/jmadasme/qr-product-scanner.git
-cd qr-product-scanner/versions/QRProductScanner
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">El concepto</div><h2>Qué es y por qué existe</h2></div><div class="rich reveal"><p>QR Product Scanner es una aplicación web de un solo archivo que lee códigos QR de productos con la cámara del navegador. Usa jsQR para decodificar el cuadro de video y una API simulada para mostrar código, descripción y precio. No requiere backend, build ni instalación.</p><p>Está pensada para demostrar el flujo completo de consulta en terreno: abrir, permitir la cámara, apuntar y ver el resultado. También sirve como base para conectar un catálogo real reemplazando una función. Su antecedente fue una aplicación de escritorio en PyQt6 y OpenCV, reemplazada para eliminar dependencias y facilitar el uso desde el móvil.</p></div></div></section>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">El proyecto en detalle</div><h2>Documentación preservada</h2><p class="section-sub">El README original de la versión de referencia, completo.</p></div><div class="detail rich reveal">
+<p align="center">
+<img alt="Status" src="https://img.shields.io/badge/status-activo-30D158"/>
+<img alt="Platform" src="https://img.shields.io/badge/plataforma-web-0071E3"/>
+<img alt="Tech" src="https://img.shields.io/badge/tecnología-HTML+CSS+JS-F5F5F7"/>
+<img alt="License" src="https://img.shields.io/badge/licencia-MIT-86868B"/>
+</p>
+<p><strong>Escáner profesional de códigos QR para consulta de productos</strong> — ahora como aplicación web moderna.</p>
+<blockquote>
+<p>🖥️ <strong>Antes</strong>: App de escritorio Python + PyQt6 + OpenCV<br/>
+🌐 <strong>Ahora</strong>: Web app auto-contenida (HTML + CSS + JS) — sin servidor, sin instalación</p>
+</blockquote>
+<hr/>
+<h2 id="caracteristicas">✨ Características</h2>
+<ul>
+<li><strong>Interfaz moderna y minimalista</strong> — Tema claro, tipografía Inter, bordes sutiles, sin colores fluorescentes</li>
+<li><strong>Cámara nativa del navegador</strong> — Actívala con un clic (API <code>getUserMedia</code>)</li>
+<li><strong>Cuadrante de escaneo animado</strong> — 4 esquinas tipo L con efecto <em>breathing</em> y línea de barrido</li>
+<li><strong>Detección QR en tiempo real</strong> — Mediante <code>jsQR</code>, 4 capturas por segundo</li>
+<li><strong>API simulada</strong> — 4 productos de ejemplo con latencia aleatoria (300–800ms)</li>
+<li><strong>Feedback visual completo</strong> — Flash verde al detectar, spinner de carga, panel deslizante</li>
+<li><strong>Responsive</strong> — Funciona en desktop y móvil</li>
+<li><strong>Sin dependencias</strong> — Solo necesitas un navegador moderno</li>
+</ul>
+<hr/>
+<h2 id="como-usar">🚀 Cómo usar</h2>
+<h3 id="opcion-1-abrir-directamente-recomendado">Opción 1: Abrir directamente (recomendado)</h3>
+<p>Abre el archivo <code>index.html</code> en cualquier navegador moderno (Chrome, Edge, Safari, Firefox):</p>
+<pre><code class="language-bash"># Desde la terminal
+open index.html        # macOS
+xdg-open index.html    # Linux
+start index.html       # Windows
+</code></pre>
+<p>O simplemente haz doble clic en <code>index.html</code>.</p>
+<h3 id="opcion-2-servir-con-python-para-probar-desde-otro-dispositivo">Opción 2: Servir con Python (para probar desde otro dispositivo)</h3>
+<pre><code class="language-bash">cd QRProductScanner
 python3 -m http.server 8080
-# abrí http://localhost:8080</pre></div>
-  </div>
-</div></section>
-
-<section class="section tight" id="docs"><div class="wrap">
-  <div class="section-head reveal"><div class="kicker">06 — Documentación</div><h2>Para usar y para entender.</h2><p class="section-sub">Cada documento está en el repositorio, versionado junto al código.</p></div>
-  <div class="docs"><a class="doc reveal" href="https://github.com/jmadasme/qr-product-scanner/blob/main/docs/datasheet.md" target="_blank" rel="noopener"><span class="tag">DATASHEET</span><h4>Manual de operación</h4><p>Instalación, configuración, uso y diagnóstico.</p></a><a class="doc reveal" href="https://github.com/jmadasme/qr-product-scanner/blob/main/docs/developer.md" target="_blank" rel="noopener"><span class="tag">DEVELOPER</span><h4>Guía de código</h4><p>Arquitectura, módulos, contratos y extensión.</p></a><a class="doc reveal" href="https://github.com/jmadasme/qr-product-scanner/blob/main/docs/REFERENCES.md" target="_blank" rel="noopener"><span class="tag">REFERENCES</span><h4>Referencias</h4><p>Estándares, librerías y fuentes oficiales.</p></a></div>
-</div></section>
-
-<section class="section tight"><div class="wrap"><div class="note reveal"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span><strong>Preservación:</strong> las versiones se copiaron sin <code>.git</code>, <code>node_modules</code>, entornos virtuales, compilados ni bases de datos. Los tokens y claves detectados fueron redactados; las plantillas <code>.example</code> se conservan. Las limitaciones conocidas están en la documentación, no escondidas.</span></div></div></section>
-
+</code></pre>
+<p>Luego abre <code>http://localhost:8080</code> en tu navegador.</p>
+<h3 id="opcion-3-online">Opción 3: Online</h3>
+<p>El proyecto está disponible en GitHub Pages (si está habilitado):</p>
+<pre><code>https://wanderc137.github.io/QRProductScanner/
+</code></pre>
+<hr/>
+<h2 id="como-escanear">📱 Cómo escanear</h2>
+<ol>
+<li>Abre la página → verás el <strong>placeholder</strong> con el botón "📷 Escanear QR"</li>
+<li>Presiona el botón → el navegador pedirá permiso para usar la cámara</li>
+<li>Acepta el permiso → el <strong>visor</strong> se activa con el cuadrante animado</li>
+<li><strong>Enfoca un código QR</strong> dentro del cuadrante</li>
+<li>Escucharás/flash verde → el código se detecta automáticamente</li>
+<li>La app consulta la API simulada y muestra:
+   - Código del producto
+   - Descripción
+   - Valor</li>
+<li>La cámara sigue activa para escanear otro producto</li>
+</ol>
+<h3 id="codigos-qr-de-prueba">Códigos QR de prueba</h3>
+<p>En la carpeta <code>resources/</code> hay 4 códigos QR pre-generados:</p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Producto</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROD-00123-A7B</code></td>
+<td>Auriculares Bluetooth Pro</td>
+<td>$59.99</td>
+</tr>
+<tr>
+<td><code>PROD-00456-C9D</code></td>
+<td>Teclado Mecánico RGB</td>
+<td>$89.99</td>
+</tr>
+<tr>
+<td><code>PROD-00789-E1F</code></td>
+<td>Monitor 27" 4K</td>
+<td>$349.99</td>
+</tr>
+<tr>
+<td><code>PROD-00999-G3H</code></td>
+<td>Webcam HD 1080p</td>
+<td>$45.50</td>
+</tr>
+</tbody>
+</table>
+<p>Ábrelos en tu celular o en otra pantalla para probar.</p>
+<hr/>
+<h2 id="estructura-del-proyecto">🏗️ Estructura del proyecto</h2>
+<pre><code>QRProductScanner/
+├── index.html             ← Web app (todo en uno)
+├── README.md              ← Este archivo
+├── PLAN.md                ← Plan de desarrollo
+├── AUDIT_REPORT.md        ← Reporte de auditoría
+├── resources/
+│   ├── qr_PROD-00123-A7B.png
+│   ├── qr_PROD-00456-C9D.png
+│   ├── qr_PROD-00789-E1F.png
+│   └── qr_PROD-00999-G3H.png
+└── docs/
+    ├── datasheet.md       ← Documentación de usuario
+    └── developer.md       ← Documentación técnica
+</code></pre>
+<hr/>
+<h2 id="tecnologias">🧰 Tecnologías</h2>
+<table>
+<thead>
+<tr>
+<th>Tecnología</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTML5</strong></td>
+<td>Estructura semántica</td>
+</tr>
+<tr>
+<td><strong>CSS3</strong></td>
+<td>Diseño con variables, flexbox, animaciones</td>
+</tr>
+<tr>
+<td><strong>JavaScript (ES6+)</strong></td>
+<td>Lógica de la aplicación</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cozmo/jsQR"><strong>jsQR</strong></a></td>
+<td>Decodificación de QR en el cliente</td>
+</tr>
+<tr>
+<td><a href="https://rsms.me/inter/"><strong>Inter</strong></a></td>
+<td>Tipografía limpia y moderna</td>
+</tr>
+<tr>
+<td><strong>MediaDevices API</strong></td>
+<td>Acceso a cámara desde el navegador</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="advertencias">⚠️ Advertencias</h2>
+<ul>
+<li><strong>Requiere permisos de cámara</strong> en el navegador</li>
+<li><strong>Requiere conexión a internet</strong> para cargar jsQR desde CDN</li>
+<li><strong>HTTPS requerido</strong> en algunos navegadores para acceder a la cámara (en localhost funciona sin HTTPS)</li>
+<li>Esta es una <strong>versión demo</strong> con datos simulados</li>
+<li>Los datos mostrados son de ejemplo, no reales</li>
+</ul>
+<hr/>
+<h2 id="proximos-pasos-conectar-a-api-real">🔌 Próximos pasos (conectar a API real)</h2>
+<p>El código está preparado para conectarse a una API real. Solo necesitas reemplazar la función <code>getProduct()</code> en <code>index.html</code> con una llamada <code>fetch()</code> a tu endpoint:</p>
+<pre><code class="language-javascript">async function getProduct(code, onResult) {
+  try {
+    const res = await fetch(`/api/products/${code}`);
+    const data = await res.json();
+    onResult(data);
+  } catch (err) {
+    onResult(null);
+  }
+}
+</code></pre>
+<hr/>
+<h2 id="licencia">📄 Licencia</h2>
+<p>MIT © 2026</p></div></div></section>
+<section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Lo que no funcionó</div><h2>Los tropiezos, documentados</h2><p class="section-sub">Las primeras versiones existen para que estos errores no se repitan: cada una dejó una decisión de diseño verificable.</p></div><div class="fail-grid reveal"><div class="fail"><div class="v">QRProductScanner</div><h3>Reescritura desde escritorio</h3><p>La versión anterior en PyQt6 y OpenCV obligaba a instalar Python, Qt y OpenCV para leer un código, una carga mayor que el problema a resolver. Se reescribió como una página única que usa la cámara del navegador. El README conserva la versión de escritorio como antecedente, pero no incluye su código.</p></div><div class="fail"><div class="v">QRProductScanner</div><h3>Catálogo simulado</h3><p>La aplicación publicada usa un objeto PRODUCTS con cuatro productos de ejemplo y una latencia aleatoria de 300 a 800 ms. No consulta un inventario ni persiste lecturas. El README lo declara como demo y deja preparada la función getProduct() para sustituirla por una API real.</p></div><div class="fail"><div class="v">QRProductScanner</div><h3>CDN y permiso de cámara</h3><p>jsQR se carga desde jsDelivr con la etiqueta @latest, así que el escaneo depende de la red en la primera carga y de una versión que puede cambiar. La cámara exige HTTPS o localhost, y abrir el archivo con file:// puede bloquear el permiso.</p></div></div></div></section><section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Ficha de evaluación</div><h2>Cómo se mide este proyecto</h2><p class="section-sub">Seis criterios con la misma escala en todo el catálogo, para comparar sin marketing.</p></div><div class="rating-head reveal"><div class="rating-avg">3.7<small>/5</small></div><div><strong>Madurez global</strong><p>Demostración compacta de un flujo de escaneo real, con catálogo simulado y dependencias explícitas; útil como base, no como inventario en producción. El código prioriza la claridad sobre la escalabilidad.</p></div></div><div class="rating reveal"><div class="rating-row"><div class="rating-name">Madurez</div><div class="rating-bar"><i style="width:40%"></i></div><div class="rating-score">2/5</div><div class="rating-note">Demo autocontenida con catálogo simulado y sin persistencia; no hay pruebas ni integración con inventario.</div></div><div class="rating-row"><div class="rating-name">Reproducibilidad</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">Un index.html y cuatro PNG se sirven con python3 -m http.server; la decodificación requiere conexión para cargar jsQR desde CDN.</div></div><div class="rating-row"><div class="rating-name">Documentación</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">README, datasheet y guía técnica describen flujo, estados y extensión; la recomendación de abrir file:// convive con el requisito de HTTPS.</div></div><div class="rating-row"><div class="rating-name">Honestidad de límites</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">Declara datos simulados, dependencia de CDN y permisos de cámara; no presenta el demo como producto terminado.</div></div><div class="rating-row"><div class="rating-name">Valor demostrativo</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">Concentra cámara, decodificación, validación de formato, estados de interfaz y consulta en un solo archivo legible.</div></div><div class="rating-row"><div class="rating-name">Facilidad de despliegue</div><div class="rating-bar"><i style="width:80%"></i></div><div class="rating-score">4/5</div><div class="rating-note">Se publica como estático en GitHub Pages o cualquier hosting; no hay build, pero la cámara exige HTTPS.</div></div></div></div></section><section class="section tight"><div class="wrap"><div class="section-head reveal"><div class="kicker">Preguntas típicas</div><h2>Lo que suelen preguntar</h2></div><div class="faq reveal"><details><summary>¿Necesita Internet?</summary><p>No para escanear; solo para cargar la página si está publicada.</p></details><details><summary>¿Funciona en iPhone?</summary><p>Sí, con un navegador moderno y permiso de cámara.</p></details><details><summary>¿Guarda los códigos?</summary><p>No hay backend ni almacenamiento.</p></details><details><summary>¿Por qué cambiaron de PyQt6?</summary><p>Para eliminar la instalación y facilitar el uso en terreno.</p></details><details><summary>¿Lee códigos de barras?</summary><p>Está orientado a QR; otros formatos dependen de la API del navegador.</p></details></div></div></section>
 <section class="cta"><div class="wrap"><div class="cta-box reveal">
   <div class="kicker">Siguiente paso</div><h2>¿Te animás?</h2>
   <p>Usá esta familia como base para qr product scanner. Está documentada para que puedas entenderla, ejecutarla y continuarla sin adivinar.</p>

@@ -33,6 +33,60 @@ python3 -m http.server 8080
 
 La cámara solo funciona en localhost o HTTPS. Abrir el HTML con file:// puede bloquear el permiso.
 
+<!-- ficha -->
+## Ficha de evaluación
+
+**Madurez global: 3.7/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 2/5 | Demo autocontenida con catálogo simulado y sin persistencia; no hay pruebas ni integración con inventario. |
+| Reproducibilidad | 4/5 | Un index.html y cuatro PNG se sirven con python3 -m http.server; la decodificación requiere conexión para cargar jsQR desde CDN. |
+| Documentación | 4/5 | README, datasheet y guía técnica describen flujo, estados y extensión; la recomendación de abrir file:// convive con el requisito de HTTPS. |
+| Honestidad de límites | 4/5 | Declara datos simulados, dependencia de CDN y permisos de cámara; no presenta el demo como producto terminado. |
+| Valor demostrativo | 4/5 | Concentra cámara, decodificación, validación de formato, estados de interfaz y consulta en un solo archivo legible. |
+| Facilidad de despliegue | 4/5 | Se publica como estático en GitHub Pages o cualquier hosting; no hay build, pero la cámara exige HTTPS. |
+
+Demostración compacta de un flujo de escaneo real, con catálogo simulado y dependencias explícitas; útil como base, no como inventario en producción. El código prioriza la claridad sobre la escalabilidad.
+
+## Lo que no funcionó
+
+### QRProductScanner — Reescritura desde escritorio
+
+La versión anterior en PyQt6 y OpenCV obligaba a instalar Python, Qt y OpenCV para leer un código, una carga mayor que el problema a resolver. Se reescribió como una página única que usa la cámara del navegador. El README conserva la versión de escritorio como antecedente, pero no incluye su código.
+
+### QRProductScanner — Catálogo simulado
+
+La aplicación publicada usa un objeto PRODUCTS con cuatro productos de ejemplo y una latencia aleatoria de 300 a 800 ms. No consulta un inventario ni persiste lecturas. El README lo declara como demo y deja preparada la función getProduct() para sustituirla por una API real.
+
+### QRProductScanner — CDN y permiso de cámara
+
+jsQR se carga desde jsDelivr con la etiqueta @latest, así que el escaneo depende de la red en la primera carga y de una versión que puede cambiar. La cámara exige HTTPS o localhost, y abrir el archivo con file:// puede bloquear el permiso.
+
+## Preguntas típicas
+
+**¿Necesita Internet?**
+
+No para escanear; solo para cargar la página si está publicada.
+
+**¿Funciona en iPhone?**
+
+Sí, con un navegador moderno y permiso de cámara.
+
+**¿Guarda los códigos?**
+
+No hay backend ni almacenamiento.
+
+**¿Por qué cambiaron de PyQt6?**
+
+Para eliminar la instalación y facilitar el uso en terreno.
+
+**¿Lee códigos de barras?**
+
+Está orientado a QR; otros formatos dependen de la API del navegador.
+
+<!-- /ficha -->
+
 ## Documentación
 
 - [`docs/datasheet.md`](docs/datasheet.md) — instalación, operación y límites.
@@ -40,9 +94,9 @@ La cámara solo funciona en localhost o HTTPS. Abrir el HTML con file:// puede b
 - [`docs/REFERENCES.md`](docs/REFERENCES.md) — estándares, librerías y fuentes.
 - [`docs/index.html`](docs/index.html) — página del proyecto (GitHub Pages).
 
-## Alcance y honestidad
+## El proyecto en detalle
 
-## QR Product Scanner
+### QR Product Scanner
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-activo-30D158" alt="Status" />
